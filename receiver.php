@@ -63,7 +63,9 @@ $data = json_decode($json,true);
 $log = new logger();
 $log->logIt($data);
 if(isset($_REQUEST['tag'])){
+    $log->logIt("tag:".$_REQUEST['tag']);
     if($_REQUEST['tag'] == "AWS" && isset($data['AlarmName']) ){
+        $log->logIt("AlarmName:".$data['AlarmName']);
         $row_array['AlarmName'] = $data['AlarmName'];
         $row_array['AWSAccountId'] = $data['AWSAccountId'];
         $row_array['StateChangeTime'] = $data['StateChangeTime'];
@@ -71,8 +73,10 @@ if(isset($_REQUEST['tag'])){
         $row_array['Namespace'] = $data['Trigger']['Namespace'];
         $value=[$data['AWSAccountId'],$data['AlarmName'],$data['StateChangeTime'],$data['Trigger']['MetricName'],$data['Trigger']['Namespace']];
 
+        $log->logIt($value);
+
         $gs = New Gsheet();
-        $gs->updateSheet($value);
+        $gs->appendRow($value);
         exit;
     }
     else{
