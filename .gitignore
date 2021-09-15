@@ -1,4 +1,5 @@
 /vendor/*
+logs/*.*
 composer.json
 composer.lock
 composer.phar
