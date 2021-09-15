@@ -1,11 +1,13 @@
 <?php
 require ('settings.php');
 require $setting['vendor_location']. '/vendor/autoload.php';
+
 class Gsheet{
     public $settings;
     public $client;
-    function __construct($settings) {
-        $this->settings = $settings;
+    function __construct() {
+        global $setting;
+        $this->settings = $setting;
         $this->client = new Google_Client();
         $this->client->setApplicationName('Google Sheets API PHP Quickstart');
         $this->client->setScopes(Google_Service_Sheets::SPREADSHEETS);
@@ -55,12 +57,12 @@ class Gsheet{
             $params
         );
     }
-    function appendRow(){
+    function appendRow($value){
         $service = new Google_Service_Sheets($this->client);
         $spreadsheetId = '1pg8X8X8bWfQ8Eu_fmOFacyGC-CEqcVpDEotrVGx_OXE';
         $range = "Class Data";
         $values = [
-                ["This","is","a","new","Row","a","b","c"],
+            $value,
         ];
         $body = new Google_Service_Sheets_ValueRange([
         'values'=> $values
@@ -84,9 +86,11 @@ class Gsheet{
 
 }
 
-$gs = New Gsheet($setting);
-$gs->updateSheet();
-exit;
+#$gs = New Gsheet();
+#$gs->appendRow( ["This","is","a","new","Row","a","b","s"]);
+#exit;
+
+
 
 /*if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');

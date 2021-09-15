@@ -1,6 +1,6 @@
 <?php
 $hostname = gethostname();
-$setting =[];
+global $setting;
 $setting['mod'] = "Dev";
 $setting['vendor_location'] = __DIR__."";
 $setting['intsec'] = __DIR__."/../intsec/";

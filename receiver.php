@@ -1,6 +1,7 @@
 <?php
+require ('gsheet.php');
 class logger{
-    public function logIt($str){
+    public function logIt($logData){
         global $logsPath;
         $logsPath =__DIR__.'/logs/';
         $logfilename = 'default_'.date('Ymd').'.log';
@@ -22,7 +23,10 @@ class logger{
             
         }
 
-        $finalLogData = $this->VisitorIP().",".$sname.",".date("Y-m-d H:i:s").",".$str;
+        if(is_array($logData) || is_object($logData))
+            $logData = print_r($logData, TRUE);
+
+        $finalLogData = $this->VisitorIP().",".$sname.",".date("Y-m-d H:i:s").",".$logData;
         $fp = fopen($logsPath.$logfilename, 'a');
         fwrite($fp, $finalLogData."\n");
         fclose($fp);
@@ -55,8 +59,35 @@ class logger{
 }
 
 $json = file_get_contents('php://input');
-$data = json_decode($json);
+$data = json_decode($json,true);
+
+if(isset($_REQUEST['tag'])){
+    if($_REQUEST['tag'] == "AWS" && isset($data['AlarmName']) ){
+        $row_array['AlarmName'] = $data['AlarmName'];
+        $row_array['AWSAccountId'] = $data['AWSAccountId'];
+        $row_array['StateChangeTime'] = $data['StateChangeTime'];
+        $row_array['MetricName'] = $data['Trigger']['MetricName'];
+        $row_array['Namespace'] = $data['Trigger']['Namespace'];
+        $value=[$data['AWSAccountId'],$data['AlarmName'],$data['StateChangeTime'],$data['Trigger']['MetricName'],$data['Trigger']['Namespace']];
+
+        $gs = New Gsheet();
+        $gs->updateSheet($value);
+        exit;
+    }
+    else{
+        //custome alerts for google sheet
+        exit;
+    }
+}
+else{
+    exit;
+}
+
+
+
 $log = new logger();
 $log->logIt($data);
 
 ?>
+
+/webfrm\/accountcreation\/view.php
