@@ -79,6 +79,13 @@ if(isset($_REQUEST['tag'])){
         $gs->appendRow($value);
         exit;
     }
+    if($_REQUEST['tag'] == "Internal" && isset($data['Account']) ){
+        $value=[$data['Account'],$data['Name'],$data['Date&Time'],$data['Details']];
+        $log->logIt($value);
+        $gs = New Gsheet();
+        $gs->appendRow($value);
+        exit;
+    }
     else{
         //custome alerts for google sheet
         exit;
