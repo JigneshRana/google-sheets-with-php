@@ -60,7 +60,8 @@ class logger{
 
 $json = file_get_contents('php://input');
 $data = json_decode($json,true);
-
+$log = new logger();
+$log->logIt($data);
 if(isset($_REQUEST['tag'])){
     if($_REQUEST['tag'] == "AWS" && isset($data['AlarmName']) ){
         $row_array['AlarmName'] = $data['AlarmName'];
@@ -82,12 +83,4 @@ if(isset($_REQUEST['tag'])){
 else{
     exit;
 }
-
-
-
-$log = new logger();
-$log->logIt($data);
-
 ?>
-
-/webfrm\/accountcreation\/view.php
