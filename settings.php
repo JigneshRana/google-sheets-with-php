@@ -1,19 +1,20 @@
 <?php
 $hostname = gethostname();
-$ENVMOD = "Dev";
-$VENDOR_LOCATION = __DIR__."";
-$INTSEC = __DIR__."/../intsec/";
+$setting =[];
+$setting['mod'] = "Dev";
+$setting['vendor_location'] = __DIR__."";
+$setting['intsec'] = __DIR__."/../intsec/";
 
 $pattern = "/ip-/i";
 if( preg_match($pattern, $hostname) ){
-    $ENVMOD = "Pro";
+    $setting['mod'] = "Pro";
 }
-if($ENVMOD == "Dev"){
-    $VENDOR_LOCATION =  __DIR__."";
+if($setting['mod'] == "Dev"){
+    $setting['vendor_location'] =  __DIR__."";
 }
-elseif($ENVMOD == "Pro"){
-    $VENDOR_LOCATION = __DIR__."/../";
-    $INTSEC = __DIR__."/../../intsec/";
+elseif($setting['mod'] == "Pro"){
+    $setting['vendor_location'] = __DIR__."/../";
+    $setting['intsec'] = __DIR__."/../../intsec/";
 }
 
 
