@@ -13,6 +13,7 @@ if($ENVMOD == "Dev"){
 }
 elseif($ENVMOD == "Pro"){
     $VENDOR_LOCATION = __DIR__."/../";
+    $INTSEC = __DIR__."/../../intsec/";
 }
 
 
