@@ -1,6 +1,7 @@
 <?php
-#crm-vpc-alb-815136790.us-east-1.elb.amazonaws.com
-require __DIR__ . '/vendor/autoload.php';
+require ('settings.php');
+require $VENDOR_LOCATION. '/vendor/autoload.php';
+
 
 if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
@@ -15,7 +16,7 @@ function getClient()
     $client = new Google_Client();
     $client->setApplicationName('Google Sheets API PHP Quickstart');
     $client->setScopes(Google_Service_Sheets::SPREADSHEETS);
-    $client->setAuthConfig('credentials.json');
+    $client->setAuthConfig($INTSEC.'credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
 
@@ -133,4 +134,4 @@ function appendRow(){
         $insert
     );
 }
-appendRow();
+readSheet();
