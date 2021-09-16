@@ -87,8 +87,8 @@ if(isset($_REQUEST['tag'])){
         exit;
     }
     if($_REQUEST['tag'] == "Internal" && isset($data['subject']) ){
-        $details = $data['userName']." > ".$data['sourceIP']." > ".$data['servicename']." > ".$data['eventName'];
-        $value=[$data['servicename'],$data['subject'],$data['DateTime'],$details];
+        $details = $data['userName']." > ".$data['sourceIP'];
+        $value=[$data['servicename'],$data['subject'],$data['DateTime'],$details,$data['servicename']."/".$data['eventName']];
         $log->logIt($value);
         $gs = New Gsheet();
         $gs->appendRow($value);
