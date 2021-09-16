@@ -86,6 +86,14 @@ if(isset($_REQUEST['tag'])){
         $gs->appendRow($value);
         exit;
     }
+    if($_REQUEST['tag'] == "Internal" && isset($data['subject']) ){
+        $details = $data['userName']." > ".$data['sourceIP']." > ".$data['servicename']." > ".$data['eventName'];
+        $value=[$data['servicename'],$data['subject'],$data['DateTime'],$details];
+        $log->logIt($value);
+        $gs = New Gsheet();
+        $gs->appendRow($value);
+        exit;
+    }
     else{
         //custome alerts for google sheet
         exit;
